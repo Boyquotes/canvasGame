@@ -32,6 +32,8 @@ var render = function() {
     }
     if (monsterReady) {
       ctx.drawImage(monsterImg, monster.x, monster.y);
+      ctx.drawImage(monsterImg, monster2.x, monster2.y);
+
     }
   };
 
@@ -45,7 +47,10 @@ var render = function() {
     x: 0,
     y: 0
   };
-
+  var monster2 = {
+    x: 0,
+    y: 0
+  };
 
   var keysDown = {};
 
@@ -62,13 +67,13 @@ var render = function() {
     hero.y = canvas.height /2;
     monster.x = 32 + (Math.random()*(canvas.width - 64));
     monster.y = 32 + (Math.random()*(canvas.height - 64));
+    monster2.x = 32 + (Math.random()*(canvas.width - 64));
+    monster2.y = 32 + (Math.random()*(canvas.height - 64));
   };
 
   var update = function(modifier) {
-    console.log("fuck");
     if ( (38 in keysDown) && (hero.y > 0) ) {
       hero.y -= hero.speed * modifier;
-      console.log("fleche en haut");
     }
     if ( (40 in keysDown) && (hero.y < 448) ) {
       hero.y += hero.speed * modifier;
@@ -80,10 +85,15 @@ var render = function() {
       hero.x -= hero.speed * modifier;
     }
     if (
-      hero.x <= monster.x + 32
+      (hero.x <= monster.x + 32
       && monster.x <= hero.x + 32
       && hero.y <= monster.y + 32
-      && monster.y <= hero.y + 32
+      && monster.y <= hero.y + 32)
+      ||
+      (hero.x <= monster2.x + 32
+      && monster2.x <= hero.x + 32
+      && hero.y <= monster2.y + 32
+      && monster2.y <= hero.y + 32)
     ) {
       reset();
     }
